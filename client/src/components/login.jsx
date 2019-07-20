@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Joi from 'joi-browser';
+import { Link, Redirect } from 'react-router-dom';
+import httpService from './../services/httpService';
 
 class Login extends Component {
 
@@ -46,8 +48,11 @@ class Login extends Component {
                         {errors['password'] && <div className="alert alert-danger">{errors['password']}</div>}
 
                         </div>
+                        {errors['form'] && <div className="alert alert-danger">{errors['form']}</div>}
+
                         <button className="btn btn-primary" disabled={disableSubmitButton} >Login</button>
                     </form>
+                    <p>not registerd? <Link to={'/register'}>Sign up</Link></p>
                 </div>
             </React.Fragment>
         );
@@ -66,6 +71,21 @@ class Login extends Component {
         this.setState({ errors: errors || {} });
         if(errors) // Errors Exists
             return;
+        httpService.post(httpService.apiEndPoint + 'auth/loginUser', {
+                ...this.state.account
+            })
+            .then(res => {
+                if(res.status == 200)  {
+                    console.log("What The fuck")
+                    return <Redirect to="/" />}
+            })
+            .catch(error => {
+                let msg = error.response.data.msg;
+                let { errors } = this.state;
+                errors['form'] = msg;
+                this.setState({ errors });
+                 console.log(error.response)
+            })
     }
 
     validate = () => {

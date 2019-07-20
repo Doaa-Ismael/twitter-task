@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Joi from 'joi-browser';
 import httpService from '../services/httpService';
+import { Redirect } from 'react-router-dom'
 
 class Register extends Component {
 
@@ -72,6 +73,7 @@ class Register extends Component {
                             {errors['bio'] && <div className="alert alert-danger">{errors['bio']}</div>}
                         
                         </div>
+                        {errors['form'] && <div className="alert alert-danger">{errors['form']}</div>}
                         <button className="btn btn-primary" disabled={disableSubmitButton} >Register</button>
                     </form>
                 </div>
@@ -92,9 +94,22 @@ class Register extends Component {
         this.setState({ errors: errors || {} });
         if(errors) // Errors Exists
             return;
-        console.log("HII")
-        // httpService.get('https://jsonplaceholder.typicode.com/'+'todos/5')
-        // .then(res => console.log("Api result", res))
+        
+        httpService.post(httpService.apiEndPoint + 'auth/registerUser', {
+            ...this.state.account
+        })
+        .then(res => {
+            if(res.status == 200)
+            return <Redirect to='/' />
+        })
+        .catch(error => {
+           let msg = error.response.data.msg;
+           let { errors } = this.state;
+           errors['form'] = msg;
+           this.setState({ errors });
+            console.log(error.response)
+            
+        })
     }
 
     validate = () => {
