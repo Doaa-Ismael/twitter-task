@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
 import Joi from 'joi-browser';
+import httpService from '../services/httpService';
 
-class Login extends Component {
+class Register extends Component {
 
     state = {
-        account: { email: '', password: '' },
+        account: { email: '', password: '', name: '', bio: '' },
         errors: { }, 
         disableSubmitButton: false
     }
     schema = {
         email: Joi.string().email().required().label('Email'),
-        password: Joi.string().required().label('Password')
+        password: Joi.string().required().label('Password'),
+        name: Joi.string().required().label('Name'),
+        bio: Joi.string().allow('').optional()
     }
-
+    
     render() {
         const { account, errors, disableSubmitButton } = this.state; 
         return (
             <React.Fragment>
                 
                 <div className="container mt-2">
-                    <h1>Login</h1>
+                    <h1>Register</h1>
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="email">Email</label>
@@ -31,6 +34,18 @@ class Login extends Component {
                                 onChange={this.handleChange}
                                 type="email" />
                             {errors['email'] && <div className="alert alert-danger">{errors['email']}</div>}
+                        
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="name">Name</label>
+                            <input 
+                                id="name"
+                                name="name"
+                                type="text"
+                                className="form-control"
+                                value={account.name}
+                                onChange={this.handleChange} />
+                            {errors['name'] && <div className="alert alert-danger">{errors['name']}</div>}
                         
                         </div>
                         <div className="form-group">
@@ -46,7 +61,18 @@ class Login extends Component {
                         {errors['password'] && <div className="alert alert-danger">{errors['password']}</div>}
 
                         </div>
-                        <button className="btn btn-primary" disabled={disableSubmitButton} >Login</button>
+                        <div className="form-group">
+                            <label htmlFor="email">Bio</label>
+                            <input 
+                                id="bio"
+                                name="bio"
+                                className="form-control"
+                                value={account.bio}
+                                onChange={this.handleChange} />
+                            {errors['bio'] && <div className="alert alert-danger">{errors['bio']}</div>}
+                        
+                        </div>
+                        <button className="btn btn-primary" disabled={disableSubmitButton} >Register</button>
                     </form>
                 </div>
             </React.Fragment>
@@ -66,11 +92,13 @@ class Login extends Component {
         this.setState({ errors: errors || {} });
         if(errors) // Errors Exists
             return;
+        console.log("HII")
+        // httpService.get('https://jsonplaceholder.typicode.com/'+'todos/5')
+        // .then(res => console.log("Api result", res))
     }
 
     validate = () => {
         const result = Joi.validate(this.state.account, this.schema, {abortEarly: false});
-        console.log(result)
         if(!result.error) return null;
         const errors = {};
         result.error.details.reduce((prev, cur) => (prev[cur.path[0]] = cur.message, prev) ,  errors);
@@ -78,4 +106,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default Register;
