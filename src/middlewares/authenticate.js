@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
             message: 'No token provided.'
         });
 
-    } catch {
+    } catch(ex) {
         res
         .status(401)
         .json({ success: false, message: 'Failed to authenticate token.' });
