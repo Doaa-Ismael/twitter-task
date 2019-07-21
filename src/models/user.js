@@ -37,7 +37,7 @@ userSchema.methods.validPassword = function(password) {
 };
 
 userSchema.methods.generateAuthToken = function() {
-    return jwt.sign({_id: this._id},  'twitter-app');
+    return jwt.sign({_id: this._id, name: this.name, img: this.img},  'twitter-app');
 };
 
 

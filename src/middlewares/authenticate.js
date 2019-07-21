@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
         if (token) {
             const decodedToken = jwt.verify(token, 'twitter-app');
             req.decoded = decodedToken;
-            next();
+            return next();
         }
         return res.status(403).send({
             success: false,

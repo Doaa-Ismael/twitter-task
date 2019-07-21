@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import Tweets from './tweets';
 class Home extends Component {
     state = {  }
     render() { 
-        return ( <h1>Welcome Home</h1> );
+        return (
+        <main className="container">
+            <Tweets />
+        </main> );
     }
 }
  
