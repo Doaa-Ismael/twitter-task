@@ -15,10 +15,8 @@ class Tweets extends Component {
     render() {
         return (
             <div>
-                <ul class="list-group">
-                {this.state.tweets.map(tweet => <li class="list-group-item">
-                    <Tweet tweet={tweet} />
-                </li>)}
+                <ul className="list-group">
+                {this.state.tweets.map(tweet => <Tweet key={tweet._id} tweet={tweet} />)}
                 </ul>
                 
             </div>

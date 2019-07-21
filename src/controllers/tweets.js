@@ -1,6 +1,12 @@
 const { Tweet, validate } = require('../models/tweet');
 const PAGE_LIMIT = 2;
 
+
+/**
+ * tweet :)
+ * @route POST tweets/
+ * @returns {tweet}
+ */
 addTweet = async ({ decoded, body }, res, next) => {
     const { error } = validate(body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -17,8 +23,13 @@ addTweet = async ({ decoded, body }, res, next) => {
     res.json({ tweet });
 }
 
+/**
+ * @route GET /tweets
+ * @param optional page in search query for pagination
+ */
+
 getTweets = async ({ decoded, query }, res, next) => {
-    let tweets = await Tweet.find().skip(query.page * PAGE_LIMIT || 0).limit(PAGE_LIMIT);
+    let tweets = await Tweet.find()//.skip(query.page * PAGE_LIMIT || 0).limit(PAGE_LIMIT);
     res.json({ tweets });
 }
 
