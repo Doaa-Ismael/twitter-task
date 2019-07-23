@@ -75,9 +75,7 @@ class Login extends Component {
                 ...this.state.account
             })
             .then(res => {
-                if(res.status == 200)  {
-                    console.log("What The fuck")
-                    return <Redirect to="/" />}
+                if(res.status == 200)  this.props.history.push('/')
             })
             .catch(error => {
                 let msg = error.response.data.msg;

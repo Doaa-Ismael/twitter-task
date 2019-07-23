@@ -64,7 +64,7 @@ class Register extends Component {
                         </div>
                         <div className="form-group">
                             <label htmlFor="email">Bio</label>
-                            <input 
+                            <textarea 
                                 id="bio"
                                 name="bio"
                                 className="form-control"
@@ -99,8 +99,7 @@ class Register extends Component {
             ...this.state.account
         })
         .then(res => {
-            if(res.status == 200)
-            return <Redirect to='/' />
+            if(res.status == 200) this.props.history.push('/');
         })
         .catch(error => {
            let msg = error.response.data.msg;

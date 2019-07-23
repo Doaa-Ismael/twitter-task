@@ -28,6 +28,19 @@ class tweetWithComments extends Component {
                         <span className="ml-2">{comment.user.name}</span>
                     </div>
                     <p className="ml-5">{comment.content}</p>
+                        {/*************  Sub Comments   ********************/}
+                        { comment.subComments.length != 0 &&  
+                        <ul className="list-group ml-5"> { comment.subComments.map( (subComment, indx) => 
+                            <li className="list-group-item" key={indx}>
+                                <div >
+                                    <img src={subComment.user.img} alt="" style={{ width: '3rem', height: '3rem', borderRadius: '50%'}}/>
+                                    <span className="ml-2">{subComment.user.name}</span>
+                                </div>
+                                <p className="ml-5">{subComment.content}</p>
+                            </li>
+                        )}
+                            </ul>
+                        }
                 </li>
                 ) }
                 </ul>

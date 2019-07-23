@@ -47,13 +47,18 @@ getTweetWithComments = async ( req, res, next ) => {
 
 
     // const rr = await Comment.create({
-    //     "content": "You are right!",
+    //     "content": "F",
     // "tweet": "5d347b090174df7bf14d8b52",
-    // "user": "5d3384bf8408192db71c4994"
+    // "user": "5d3384bf8408192db71c4994", 
+    // "subComments" : [ {
+    //     "user": '5d35fa615506640d3c017826',
+    //     "content" : "enable notifications instead!"
+    //     }
+    // ]
     // });
     console.log(tweetId)
     // get Comments
-    let comments = await Comment.find({ tweet: tweetId}).populate('user', 'name img');
+    let comments = await Comment.find({ tweet: tweetId}).populate('user', 'name img').populate(' subComments.user', 'name img');
 
     res.json({ tweet, comments });
 }
