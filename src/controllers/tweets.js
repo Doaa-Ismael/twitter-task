@@ -31,8 +31,15 @@ addTweet = async ({ decoded, body }, res, next) => {
  */
 
 getTweets = async ({ decoded, query }, res, next) => {
-    let tweets = await Tweet.find()//.skip(query.page * PAGE_LIMIT || 0).limit(PAGE_LIMIT);
+    let findQuery = {};
+    if(query.commentsNumber) { findQuery.commentsNumber =  { $eq: query.commentsNumber } }
+    if(query.lastCreated) { findQuery.commentsNumber =  { $eq: query.commentsNumber } }
+    let x = Tweet.find(findQuery)
+    query.lastCreated? x.sort({createdAt: -1}): null;
+
+    let tweets = await x; //.skip(query.page * PAGE_LIMIT || 0).limit(PAGE_LIMIT);
     res.json({ tweets });
+
 }
 
 

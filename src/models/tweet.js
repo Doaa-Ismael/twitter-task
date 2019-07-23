@@ -16,9 +16,9 @@ const tweetSchema = new mongoose.Schema({
         trim: true
     },
     content: {
-        required: true, 
+        //required: true, 
         type: String, 
-        minlength: 1,
+        //minlength: 1,
         maxlength: 255,
         trim: true
     },
@@ -35,8 +35,8 @@ const tweetSchema = new mongoose.Schema({
 
 function validate(user) {
     const schema = {
-        title: Joi.string().required().min(1).max(100) ,
-        content: Joi.string().required().min(1).max(255)
+        title: Joi.string().required().min(1).max(100),
+        content: Joi.string().allow('')
         //commentsNumber: Joi.number().required().min(0),
     }
     return Joi.validate(user, schema);

@@ -75,14 +75,17 @@ class Login extends Component {
                 ...this.state.account
             })
             .then(res => {
-                if(res.status == 200)  this.props.history.push('/')
+                if(res.status == 200)  {
+                    localStorage.setItem('twitter_token', res.data.token);
+                    this.props.history.push('/');
+                }
             })
             .catch(error => {
                 let msg = error.response.data.msg;
                 let { errors } = this.state;
                 errors['form'] = msg;
                 this.setState({ errors });
-                 console.log(error.response)
+                console.log(error.response)
             })
     }
 

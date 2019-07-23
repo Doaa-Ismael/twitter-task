@@ -22,7 +22,9 @@ register = async (req, res, next) => {
         });
         user = await user.save();
         const token = user.generateAuthToken();
-        res.header('authorization', token).json({ user: { 
+        res.json({ 
+            token,
+            user: { 
             name: user.name,
             _id: user._id,
             img: user.img
@@ -47,10 +49,12 @@ login = async (req, res, next) => {
         if(!user.validPassword(password))
             return res.status(400).json({msg: 'Invalid email or password'});
         const token = user.generateAuthToken();
-        res.header('authorization', token).json({ user: { 
-            name: user.name,
-            _id: user._id,
-            img: user.img
+        res.json({ 
+            token,
+            user: { 
+                name: user.name,
+                _id: user._id,
+                img: user.img
         }});
     }
     catch (e) {

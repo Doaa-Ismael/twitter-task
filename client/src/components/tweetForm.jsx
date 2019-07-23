@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import httpService from '../services/httpService';
 
 class TweetForm extends Component {
     state = { 
@@ -10,7 +11,7 @@ class TweetForm extends Component {
     render() { 
         const { errors, tweet } = this.state;
         return ( 
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} action="">
                         <div className="form-group">
                             <input 
                                 id="title"
@@ -29,8 +30,8 @@ class TweetForm extends Component {
                             placeholder="tweet.." 
                             name="content"
                             value={tweet.content}/>
-                        <div className="d-flex justify-content-end mt-2">
-                            <button className="btn btn-primary" disabled={!tweet.title} >Tweet</button>
+                        <div className="d-flex justify-content-end my-2">
+                            <button className="btn btn-primary" disabled={tweet.title.trim() == ''}  >Tweet</button>
                         </div>
             </form>
         );
@@ -40,6 +41,22 @@ class TweetForm extends Component {
         const { tweet } = this.state;
         tweet[target.name] = target.value;
         this.setState({ tweet });
+    }
+
+    handleSubmit = (e) => {
+        const {onTweet} = this.props;
+        const { tweet } = this.state;
+
+        e.preventDefault();
+        this.setState({ tweet: {
+            title: '', 
+            content: ''
+        } });
+        httpService.post(httpService.apiEndPoint + 'tweets', { ...tweet })
+        .then(res => {
+          onTweet(res.data.tweet);
+        })
+        .catch(e => console.log(e))
     }
 }
  

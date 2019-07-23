@@ -15,7 +15,10 @@ class PeopleSearch extends Component {
 
     render() { 
         const {users} = this.state;
-        return ( <ul className="list-group" >
+        return ( 
+            <div>
+                {users.length == 0 && <div className="text-center"> No Result Found!</div>}
+        { users.length != 0 && <ul className="list-group" >
             {users.map((user, index) => 
                 <li className="list-group-item d-flex justify-content-between" key={user._id}>
                     <div >
@@ -24,7 +27,9 @@ class PeopleSearch extends Component {
                     </div>
                     <button className="btn btn-primary btn-sm" style={{ height: '2rem', width: '5rem'}}>Follow</button>
                 </li>)}
-        </ul> );
+        </ul>}  
+            </div>
+         );
     }
 
     getUsers() {
