@@ -26,6 +26,6 @@ export default {
     post: axios.post, 
     put: axios.put, 
     delete: axios.delete, 
-    apiEndPoint: 'https://twitter-clone-task.herokuapp.com/'
+    apiEndPoint: 'http://localhost:3000/'//'https://twitter-clone-task.herokuapp.com/' // 'http://localhost:3000/'
     
 }
