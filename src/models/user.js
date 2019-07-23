@@ -29,7 +29,9 @@ const userSchema = new mongoose.Schema({
 
 })
 
-userSchema.index({name: 1});
+
+// Enable text search on users name
+userSchema.index({name: "text"});
 
 // checking if password is valid
 userSchema.methods.validPassword = function(password) {

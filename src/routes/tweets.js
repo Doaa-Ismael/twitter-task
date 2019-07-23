@@ -7,7 +7,7 @@ var router = express.Router();
 
 
 router.post('/', authenticate, tweetsController.addTweet);
+router.get('/:id', tweetsController.getTweetWithComments);
 router.get('/', tweetsController.getTweets);
-
 
 module.exports = router;
