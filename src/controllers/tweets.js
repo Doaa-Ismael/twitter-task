@@ -1,4 +1,6 @@
 const { Tweet, validate } = require('../models/tweet');
+const Comment = require('./../models/comment');
+const mongoose = require('mongoose');
 const PAGE_LIMIT = 2;
 
 
@@ -34,7 +36,31 @@ getTweets = async ({ decoded, query }, res, next) => {
 }
 
 
+
+getTweetWithComments = async ( req, res, next ) => {
+    const  tweetId = req.params.id;
+    if(!tweetId || !mongoose.Types.ObjectId.isValid(tweetId))
+        return res.json( { msg: 'Invalid tweet Id Provided'});
+
+    // get tweet
+    let tweet = await Tweet.findById(tweetId);
+
+
+    // const rr = await Comment.create({
+    //     "content": "You are right!",
+    // "tweet": "5d347b090174df7bf14d8b52",
+    // "user": "5d3384bf8408192db71c4994"
+    // });
+    console.log(tweetId)
+    // get Comments
+    let comments = await Comment.find({ tweet: tweetId}).populate('user', 'name img');
+
+    res.json({ tweet, comments });
+}
+
+
 module.exports = {
     addTweet,
-    getTweets
+    getTweets,
+    getTweetWithComments
 }
