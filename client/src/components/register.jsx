@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Joi from 'joi-browser';
 import httpService from '../services/httpService';
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 
 class Register extends Component {
 
@@ -75,6 +75,7 @@ class Register extends Component {
                         </div>
                         {errors['form'] && <div className="alert alert-danger">{errors['form']}</div>}
                         <button className="btn btn-primary" disabled={disableSubmitButton} >Register</button>
+                        <p>already registerd? <Link to={'/login'}>Login</Link></p>
                     </form>
                 </div>
             </React.Fragment>

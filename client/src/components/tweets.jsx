@@ -11,17 +11,19 @@ class Tweets extends Component {
         filter: {
             lastCreated: false,
             commentsNumber: null
-        }
+        },
+        isLoggedIn: false
     }
 
     componentDidMount() {
         this.getTweets();
+        this.isLoggedIn();
     }
 
     render() {
         return (
             <div>
-                <TweetForm onTweet={this.handleOntweet} />
+                { this.state.isLoggedIn == true && <TweetForm onTweet={this.handleOntweet} /> }
                 <form className="mb-2 row" onSubmit={this.handleFilter}>
                     <p className="d-inline-block m-0 ml-1 pt-2">Filter by</p>
                     <div className="form-inline col ">
@@ -78,6 +80,11 @@ class Tweets extends Component {
         const {tweets} = this.state;
         tweets.unshift(tweet);
         this.setState({ tweets  });
+    }
+
+    isLoggedIn() {
+        let isLoggedIn = localStorage.getItem('twitter_token');
+        this.setState({ isLoggedIn: isLoggedIn? true: false });
     }
 }
 
