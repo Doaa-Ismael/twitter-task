@@ -24,9 +24,9 @@ class Tweets extends Component {
         return (
             <div>
                 { this.state.isLoggedIn == true && <TweetForm onTweet={this.handleOntweet} /> }
-                <form className="mb-2 row" onSubmit={this.handleFilter}>
+                <form className="mb-2 col" onSubmit={this.handleFilter}>
                     <p className="d-inline-block m-0 ml-1 pt-2">Filter by</p>
-                    <div className="form-inline col ">
+                    <div className="form-group">
                         <label className="mr-1" for="lastCreated">Last Created:</label>
                         <select
                             className="form-control d-inline-block"
@@ -37,7 +37,8 @@ class Tweets extends Component {
                                 <option value={false}>None</option>
                                 <option value={true}>Last Created</option>
                         </select>
-                        <div className="form-inline col ">
+                    </div>
+                    <div className="form-group">
                             <label className="mr-1" for="commentsNumber">Number of comments:</label>
                             <input
                                 className="form-control"
@@ -46,7 +47,6 @@ class Tweets extends Component {
                                 name="commentsNumber"
                                 onChange={this.handleChange}></input>
                         </div>
-                    </div>
                     <button className="btn btn-primary">Filter</button>
                 </form>
                 <ul className="list-group">
